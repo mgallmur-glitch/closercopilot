@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Closer Copilot — El Sistema de Pre-Calificación para Equipos High-Ticket</title>
+    <meta name="description" content="Tu closer entra a cada llamada sabiendo exactamente a quién tiene enfrente. WhatsApp Qualifier + Brief Pre-Llamada con metodología QuantumCore™.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void-900: #030308;
+            --void-800: #060610;
+            --void-700: #0a0a18;
+            --void-600: #101028;
+            --stark-blue: #0066FF;
+            --stark-blue-glow: rgba(0, 102, 255, 0.6);
+            --electric-cyan: #00D4FF;
+            --electric-cyan-glow: rgba(0, 212, 255, 0.6);
+            --nebula-purple: #8B5CF6;
+            --nebula-glow: rgba(139, 92, 246, 0.6);
+            --gradient-primary: linear-gradient(135deg, #0066FF 0%, #00D4FF 100%);
+            --gradient-animated: conic-gradient(from 0deg, #00D4FF, #0066FF, #8B5CF6, #00D4FF);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { 
+            font-family: var(--font-body); 
+            background: var(--void-800); 
+            color: white; 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+            min-height: 100vh;
+            max-width: 100vw;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Background Effects */
+        .bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--void-800);
+        }
+
+        .aurora {
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(0, 102, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(0, 212, 255, 0.15) 0%, transparent 50%);
+            animation: auroraFlow 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes auroraFlow {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(2%, -1%) rotate(1deg); }
+        }
+
+        #particles-canvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(6, 6, 16, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: white;
+            box-shadow: 0 0 30px rgba(0, 102, 255, 0.5);
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover { color: white; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 30px rgba(0, 102, 255, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0, 102, 255, 0.7);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: visible;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding: 50px 1rem 60px;
+                align-items: flex-start;
+            }
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+        
+        @media (max-width: 1024px) {
+            .hero-container { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #25D366;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, #25D366 0%, #00D4FF 50%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--electric-cyan);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            max-width: 480px;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-comment { color: rgba(255, 255, 255, 0.4); }
+        .code-key { color: var(--electric-cyan); }
+        .code-value { color: white; }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .metric-label {
+            font-size: 0.6875rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.25rem;
+        }
+
+        /* Phone Mockup */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            width: 100%;
+            max-width: 100%;
+            overflow: visible;
+            padding: 40px 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-visual { 
+                transform: scale(1.05);
+                margin: 20px auto 40px;
+                padding: 0;
+            }
+            .phone-wrapper {
+                box-shadow: 
+                    0 0 40px rgba(37, 211, 102, 0.3),
+                    0 0 80px rgba(0, 102, 255, 0.2);
+                margin: 0 auto;
+                width: 92%;
+                max-width: 340px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-visual { 
+                transform: scale(1.02);
+                margin: 15px auto 30px;
+                padding: 0;
+            }
+            .phone-wrapper {
+                margin: 0 auto;
+                width: 95%;
+                max-width: 320px;
+            }
+        }
+
+        .phone-wrapper {
+            position: relative;
+            padding: 4px;
+            border-radius: 44px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            margin: 20px;
+        }
+
+        .phone-wrapper:hover {
+            transform: perspective(1000px) rotateY(-8deg) scale(1.02);
+            background: linear-gradient(135deg, #25D366, #0066FF);
+            border-color: transparent;
+            box-shadow: 
+                0 0 40px rgba(37, 211, 102, 0.3),
+                0 0 80px rgba(0, 102, 255, 0.2);
+        }
+
+        .phone-mockup {
+            width: 260px;
+            height: 520px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+            border-radius: 40px;
+            padding: 8px;
+            position: relative;
+            overflow: visible;
+        }
+
+        @media (max-width: 768px) {
+            .phone-mockup {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 260/520;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .phone-mockup {
+                max-width: 280px;
+            }
+        }
+
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(37,211,102,0.1), rgba(0,102,255,0.1));
+            border-radius: 40px;
+            z-index: -1;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #0a0a18 0%, #060610 100%);
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .chat-avatar {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .chat-status {
+            font-size: 0.75rem;
+            color: #25D366;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-dot {
+            width: 6px; height: 6px;
+            background: #25D366;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .chat-messages {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            overflow: hidden;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            animation: messageSlide 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes messageSlide {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message:nth-child(1) { animation-delay: 0.2s; }
+        .message:nth-child(2) { animation-delay: 0.6s; }
+        .message:nth-child(3) { animation-delay: 1s; }
+
+        .message-received {
+            background: rgba(255,255,255,0.08);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-sent {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: auto;
+        }
+
+        .input-field {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 0.625rem 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8125rem;
+        }
+
+        .send-btn {
+            width: 36px; height: 36px;
+            background: #25D366;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Sections General */
+        section { padding: 5rem 1rem; position: relative; width: 100%; max-width: 100%; }
+        
+        @media (max-width: 768px) {
+            section { padding: 3rem 0.75rem; }
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--electric-cyan);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        /* Problem Section */
+        .problem { background: rgba(255, 255, 255, 0.02); }
+
+        .problem-list {
+            list-style: none;
+            max-width: 600px;
+            margin: 1.5rem auto;
+        }
+
+        .problem-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 0;
+            color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9375rem;
+        }
+
+        .problem-item::before {
+            content: '✕';
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .problem-result {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            max-width: 600px;
+            margin: 1.5rem auto;
+            font-size: 0.9375rem;
+        }
+
+        .problem-result strong { color: #fca5a5; }
+
+        .problem-closing {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1.125rem;
+        }
+
+        .problem-closing strong { display: block; margin-bottom: 0.25rem; }
+
+        /* Cost Table */
+        .cost-table {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 700px;
+            margin: 2rem auto;
+        }
+
+        .cost-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+        }
+
+        .cost-row:last-child { border-bottom: none; }
+
+        .cost-label {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9375rem;
+        }
+
+        .cost-value {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 3D Tilt Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            perspective: 1000px;
+            width: 100%;
+        }
+        
+        @media (max-width: 1024px) {
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .cards-grid { grid-template-columns: 1fr; gap: 1rem; }
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 102, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
+        }
+
+        .card-icon {
+            width: 44px; height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8125rem;
+            line-height: 1.6;
+        }
+
+        /* Methodology */
+        .methodology { background: rgba(255, 255, 255, 0.02); }
+
+        .method-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            perspective: 1000px;
+            width: 100%;
+        }
+        
+        @media (max-width: 1024px) {
+            .method-cards { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 768px) {
+            .method-cards { grid-template-columns: 1fr; gap: 1rem; }
+        }
+
+        .method-card {
+            background: rgba(0, 102, 255, 0.05);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .method-card:hover {
+            background: rgba(0, 102, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.25);
+        }
+
+        .method-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .method-title {
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--electric-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .method-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8125rem;
+        }
+
+        /* Profiles */
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .profiles-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+        }
+
+        .profile-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.1s ease, border-color 0.3s ease;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .profile-card:hover {
+            border-color: rgba(0, 102, 255, 0.4);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .profile-icon { 
+            font-size: 2rem; 
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border-radius: 12px;
+        }
+
+        .profile-name {
+            font-family: var(--font-display);
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .profile-desc {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8125rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .profile-bar {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--electric-cyan);
+            letter-spacing: 2px;
+            padding: 0.5rem 0.75rem;
+            background: rgba(0,212,255,0.1);
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Results */
+        .results { background: rgba(255, 255, 255, 0.02); }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .results-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .result-number { font-size: 2rem; }
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .result-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8125rem;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .testimonials-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+        }
+
+        .testimonial {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .testimonial::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 1.5rem; bottom: 1.5rem;
+            width: 3px;
+            background: var(--gradient-primary);
+            border-radius: 0 3px 3px 0;
+        }
+
+        .testimonial-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .testimonial-role {
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Integrations */
+        .integrations {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .integration-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* How It Works */
+        .step {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.75rem;
+            margin-bottom: 1.25rem;
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-number {
+            font-family: var(--font-mono);
+            color: var(--stark-blue);
+            font-weight: 600;
+            font-size: 0.8125rem;
+        }
+
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .step-text {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: 0.9375rem;
+        }
+
+        .brief-visual {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+        }
+
+        .brief-header {
+            color: var(--electric-cyan);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+        }
+
+        .brief-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.375rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .brief-bar {
+            font-family: var(--font-mono);
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .urgency-high { color: #ef4444; }
+        .urgency-medium { color: #f59e0b; }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(180deg, rgba(0, 102, 255, 0.1) 0%, transparent 100%);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trust-signals {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.5);
+            flex-wrap: wrap;
+        }
+
+        /* Pricing */
+        .pricing { background: rgba(255, 255, 255, 0.02); }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 450px; }
+        }
+
+        .pricing-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.75rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+        }
+
+        .pricing-card.featured {
+            border-color: rgba(0, 102, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MÁS POPULAR';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            background: var(--gradient-primary);
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 0.375rem;
+        }
+
+        .pricing-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .pricing-card.featured::after { display: none; }
+
+        .pricing-name {
+            font-family: var(--font-mono);
+            font-size: 0.812rem;
+            color: var(--electric-cyan);
+            margin-bottom: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .pricing-amount {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .pricing-setup {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-period {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .pricing-desc {
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1.25rem;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.625rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8125rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--electric-cyan);
+            font-weight: 700;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 700px;
+            margin: 2rem auto 0;
+        }
+
+        .faq-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            margin-bottom: 0.625rem;
+            overflow: hidden;
+            transition: transform 0.1s ease;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            text-align: left;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 0 1rem 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer { display: block; }
+
+        /* About - Photo with Intense Glow */
+        .about { background: rgba(255, 255, 255, 0.02); }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-photo-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .about-photo-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: conic-gradient(from 0deg, #00D4FF, #0066FF, #8B5CF6, #00D4FF);
+            border-radius: 40px;
+            z-index: -1;
+            filter: blur(30px);
+            opacity: 0.8;
+            animation: glowRotate 8s linear infinite;
+        }
+
+        .about-photo-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            background: linear-gradient(135deg, rgba(0,212,255,0.5), rgba(0,102,255,0.4));
+            border-radius: 32px;
+            z-index: -1;
+            filter: blur(15px);
+        }
+
+        @keyframes glowRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .about-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            background: var(--void-700);
+            box-shadow: 
+                0 0 60px rgba(0, 102, 255, 0.4),
+                0 0 100px rgba(0, 212, 255, 0.2),
+                inset 0 0 40px rgba(0, 102, 255, 0.1);
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .about-photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.25rem 1.25rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+        }
+
+        .about-photo-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.02em;
+        }
+
+        .about-photo-role {
+            font-size: 0.8125rem;
+            color: var(--electric-cyan);
+            margin-top: 0.25rem;
+        }
+
+        .about-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        .about-text p {
+            margin-bottom: 0.875rem;
+            font-size: 0.9375rem;
+        }
+
+        .about-highlight {
+            color: var(--stark-blue);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-brand { display: flex; flex-direction: column; gap: 0.125rem; }
+        .footer-name { font-weight: 700; }
+        .footer-tagline { font-size: 0.6875rem; color: rgba(255, 255, 255, 0.5); }
+
+        .footer-links { display: flex; gap: 1.5rem; }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.8125rem;
+        }
+
+        .footer-link:hover { color: white; }
+
+        .footer-copyright {
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            box-shadow: 0 4px 30px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 40px rgba(37, 211, 102, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-text { margin-left: auto; margin-right: auto; }
+            .hero-ctas { justify-content: center; }
+            .hero-metrics { justify-content: center; }
+            .about-grid { grid-template-columns: 1fr; }
+            .about-photo-wrapper { margin-bottom: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 1.75rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .hero-metrics { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+            .metric-value { font-size: 1.1rem; }
+            .metric-label { font-size: 0.6rem; }
+            
+            .section-title { font-size: 1.5rem; }
+            
+            .card, .method-card, .profile-card, .testimonial, .step, .pricing-card, .faq-item {
+                padding: 1.25rem;
+            }
+            
+            .trust-signals { flex-direction: column; gap: 0.25rem; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .integrations { gap: 0.5rem; }
+            .integration-item { font-size: 0.75rem; padding: 0.375rem 0.75rem; }
+            
+            .hero-ctas { flex-direction: column; width: 100%; }
+            .hero-ctas .btn { width: 100%; justify-content: center; }
+            
+            .about-photo-wrapper { max-width: 280px; }
+            .about-photo-name { font-size: 1rem; }
+            
+            .code-block { font-size: 0.6875rem; padding: 1rem; overflow-x: auto; }
+
+            .hero-container {
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+            
+            .hero-content { order: 2; }
+            .hero-visual { order: 1; }
+
+            .pricing-grid { gap: 1rem; }
+            .pricing-card.featured { transform: none; }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-metrics { grid-template-columns: 1fr; text-align: center; gap: 0.75rem; }
+            .metric-value { font-size: 1.5rem; }
+            .metric-label { font-size: 0.75rem; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 0 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-container">
+        <div class="aurora"></div>
+        <canvas id="particles-canvas"></canvas>
+    </div>
+
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">CC</div>
+                <span class="logo-text">WhatsApp Closer Copilot</span>
+            </a>
+            <div class="nav-links">
+                <a href="#problema" class="nav-link">El Problema</a>
+                <a href="#solucion" class="nav-link">Solución</a>
+                <a href="#metodologia" class="nav-link">Metodología</a>
+                <a href="#planes" class="nav-link">Planes</a>
+                <a href="#diagnostico" class="btn btn-primary">Ver mi Revenue Gap</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>⬡</span>
+                    QuantumCore™ — Metodología propietaria
+                </div>
+                <h1 class="hero-title">Tu closer entra a cada llamada sabiendo exactamente <span>a quién tiene enfrente.</span></h1>
+                <div class="hero-subtitle">No a adivinar. No a improvisar. A cerrar.</div>
+                <p class="hero-text">
+                    Antes de cada llamada, tu lead se califica por WhatsApp con metodología QuantumCore™. El closer recibe el diagnóstico completo 30 minutos antes de hablar — perfil, dolor, objeciones probables y estrategia de apertura.
+                </p>
+                <div class="code-block">
+                    <div class="code-comment">// 30 minutos antes de tu próxima llamada de ventas</div>
+                    <div><span class="code-key">perfil_friccion:</span> <span class="code-value">"[CLASIFICADO]"</span></div>
+                    <div><span class="code-key">perfil_decision:</span> <span class="code-value">"[CLASIFICADO]"</span></div>
+                    <div><span class="code-key">perfil_monetario:</span> <span class="code-value">"[CLASIFICADO]"</span></div>
+                    <div><span class="code-key">brief_enviado:</span> <span class="code-value">true ✓</span></div>
+                    <div><span class="code-key">closer_preparado:</span> <span class="code-value">true ✓</span></div>
+                </div>
+                <div class="hero-ctas">
+                    <a href="#diagnostico" class="btn btn-whatsapp">💬 Agendar Diagnóstico Gratis</a>
+                    <a href="#como-funciona" class="btn btn-secondary">▶ Ver cómo funciona</a>
+                </div>
+                <div class="hero-metrics">
+                    <div class="metric">
+                        <div class="metric-value">Brief Pre-Llamada</div>
+                        <div class="metric-label">30 min antes de cada cita</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">Setup operativo</div>
+                        <div class="metric-label">en 7 días o menos</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">Equipos high-ticket</div>
+                        <div class="metric-label">tickets de $2K a $50K</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-wrapper">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="chat-header">
+                                <div class="chat-avatar">🤖</div>
+                                <div class="chat-info">
+                                    <div class="chat-name">QuantumCore™ Qualifier</div>
+                                    <div class="chat-status">
+                                        <span class="status-dot"></span>
+                                        En línea
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-messages">
+                                <div class="message message-received">
+                                    Hola María 👋 Veo que agendaste una llamada para mañana. Me gustaría hacerte 3 preguntas rápidas para preparar mejor la conversación...
+                                </div>
+                                <div class="message message-sent">
+                                    Claro, adelante
+                                </div>
+                                <div class="message message-received">
+                                    Perfecto. Primera: ¿qué te motivó a buscar una solución justo ahora?
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <div class="input-field">Escribe un mensaje...</div>
+                                <button class="send-btn">📎</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="problem" id="problema">
+        <div class="container">
+            <div class="section-header">
+                <div class="eyebrow">EL PROBLEMA</div>
+                <h2 class="section-title">Tu closer terminó la semana.<br>Demasiadas de sus llamadas nunca debieron llegar a ventas.</h2>
+                <p class="section-text">Tu closer está quemado. Y muchas veces no es por falta de habilidad.</p>
+            </div>
+            <ul class="problem-list">
+                <li class="problem-item">No tienen el presupuesto real para tu oferta</li>
+                <li class="problem-item">No son el tomador de decisiones</li>
+                <li class="problem-item">Solo querían información, no comprar</li>
+                <li class="problem-item">No tienen urgencia real — solo curiosidad</li>
+                <li class="problem-item">Llegan sin contexto y el closer empieza desde cero</li>
+            </ul>
+            <div class="problem-result">
+                <strong>El resultado:</strong> Tu equipo quema tiempo valioso filtrando a mano, entra a llamadas a ciegas y pierde energía donde no había oportunidad real.
+            </div>
+            
+            <h3 style="text-align: center; margin: 3rem 0 1.5rem; font-family: var(--font-display); font-size: 1.25rem;">El costo real de no tener sistema</h3>
+            <div class="cost-table">
+                <div class="cost-row">
+                    <div class="cost-label">Horas destruidas por semana (por leads no calificados / por closer)</div>
+                    <div class="cost-value">6h</div>
+                </div>
+                <div class="cost-row">
+                    <div class="cost-label">Cierres perdidos al mes (por falta de contexto antes de la llamada)</div>
+                    <div class="cost-value">2–4</div>
+                </div>
+                <div class="cost-row">
+                    <div class="cost-label">Revenue invisible / mes / closer (high-ticket $3K–$15K ticket)</div>
+                    <div class="cost-value">$6K–$20K</div>
+                </div>
+                <div class="cost-row">
+                    <div class="cost-label">ROI con 1 cierre adicional al mes (ticket de $3K, plan a $800/mes)</div>
+                    <div class="cost-value">3.75x</div>
+                </div>
+            </div>
+
+            <div class="problem-closing">
+                <strong>No es que tu closer sea malo.</strong>
+                <span>Es que nadie le dio el contexto para ganar.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution" id="solucion">
+        <div class="container">
+            <div class="section-header">
+                <div class="eyebrow">LA SOLUCIÓN</div>
+                <h2 class="section-title">El lead se califica antes de que tu closer abra la boca.<br>Sin formularios. Sin fricción.</h2>
+                <p class="section-text">Tu closer deja de perder las mejores horas del día filtrando a mano. Entra preparado a las llamadas que sí valen.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card tilt-card">
+                    <div class="card-icon">💬</div>
+                    <h3 class="card-title">Calificación natural por WhatsApp</h3>
+                    <p class="card-text">El sistema conversa con cada lead como lo haría un humano. No suena a bot. Extrae urgencia, presupuesto y fit real en 15-25 mensajes.</p>
+                </div>
+                <div class="card tilt-card">
+                    <div class="card-icon">📋</div>
+                    <h3 class="card-title">Brief Pre-Llamada automático</h3>
+                    <p class="card-text">30 minutos antes de la cita, el closer recibe el diagnóstico completo del lead — directo a su WhatsApp. Sin intervención manual.</p>
+                </div>
+                <div class="card tilt-card">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">Tu closer solo habla con quien vale</h3>
+                    <p class="card-text">Los leads HOT van al closer. Los WARM reciben seguimiento automático. Los COLD no llegan nunca.</p>
+                </div>
+                <div class="card tilt-card">
+                    <div class="card-icon">⬡</div>
+                    <h3 class="card-title">Tres perfiles QuantumCore™ detectados</h3>
+                    <p class="card-text">Perfil de Fricción, de Decisión y Monetario — identificados en la conversación y entregados al closer antes de la llamada.</p>
+                </div>
+                <div class="card tilt-card">
+                    <div class="card-icon">🛡️</div>
+                    <h3 class="card-title">Protección ética del pipeline</h3>
+                    <p class="card-text">El sistema detecta señales de no-venta antes de la llamada. Evita cierres que dañan al lead, al cliente y a tu reputación.</p>
+                </div>
+                <div class="card tilt-card">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Visibilidad real del pipeline</h3>
+                    <p class="card-text">Sabes qué está entrando, por qué ciertos leads no avanzan y exactamente dónde se pierde dinero. Nada a ojo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="methodology" id="metodologia">
+        <div class="container">
+            <div class="section-header">
+                <div class="eyebrow">LA METODOLOGÍA DETRÁS</div>
+                <h2 class="section-title">QuantumCore™ no es tecnología.<br>Es el framework que la tecnología ejecuta.</h2>
+            </div>
+            <div class="method-cards">
+                <div class="method-card tilt-card">
+                    <div class="method-icon">⬡</div>
+                    <h3 class="method-title">PERFIL DETECTADO</h3>
+                    <p class="method-text">La IA identifica señales conductuales y monetarias del lead antes de que tu closer entre a improvisar. Tres perfiles simultáneos en conversación natural.</p>
+                </div>
+                <div class="method-card tilt-card">
+                    <div class="method-icon">⚡</div>
+                    <h3 class="method-title">ESTRATEGIA ASIGNADA</h3>
+                    <p class="method-text">QuantumCore™ ordena la lectura comercial del lead y le dice al closer qué sistema de cierre tiene mayor probabilidad de funcionar con esa persona específica.</p>
+                </div>
+                <div class="method-card tilt-card">
+                    <div class="method-icon">📋</div>
+                    <h3 class="method-title">BRIEF ENTREGADO</h3>
+                    <p class="method-text">Tu closer recibe el contexto completo antes de la llamada. Sin re-diagnosticar los primeros 10 minutos. Sin improvisar la apertura. Con sistema.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profiles" id="perfiles">
+        <div class="container">
+            <div class="section-header">
+                <div class="eyebrow">EL PROBLEMA QUE NADIE ESTÁ NOMBRANDO</div>
+                <h2 class="section-title">No todos los prospectos compran por la misma razón.<br>Años observando equipos de ventas high-ticket revelan el mismo patrón.</h2>
+                <p class="section-text">El closer no siempre pierde deals por falta de esfuerzo. Muchas veces los pierde porque usa la estrategia equivocada con el tipo de prospecto equivocado. Sin sistema de lectura, improvisa. Con sistema, ejecuta.</p>
+            </div>
+            <h3 style="text-align: center; margin-bottom: 1.5rem; font-family: var(--font-display); font-size: 1.25rem;">Los 4 Perfiles del QuantumCore™</h3>
+            <div class="profiles-grid">
+                <div class="profile-card tilt-card">
+                    <div class="profile-header">
+                        <div class="profile-icon">⚡</div>
+                        <div>
+                            <div class="profile-name">EL ACTIVADOR</div>
+                            <div class="profile-bar">Sistema asignado en el brief</div>
+                        </div>
+                    </div>
+                    <div class="profile-desc">Alta energía, decisiones rápidas, se conecta emocionalmente. Necesita velocidad y entusiasmo, no análisis interminable.</div>
+                </div>
+                <div class="profile-card tilt-card">
+                    <div class="profile-header">
+                        <div class="profile-icon">🔵</div>
+                        <div>
+                            <div class="profile-name">EL ESCÉPTICO</div>
+                            <div class="profile-bar">Sistema asignado en el brief</div>
+                        </div>
+                    </div>
+                    <div class="profile-desc">Analítico, experiencias previas negativas, necesita lógica. Requiere pruebas, casos de estudio y datos concretos.</div>
+                </div>
+                <div class="profile-card tilt-card">
+                    <div class="profile-header">
+                        <div class="profile-icon">🔴</div>
+                        <div>
+                            <div class="profile-name">EL POSTERGADOR</div>
+                            <div class="profile-bar">Sistema asignado en el brief</div>
+                        </div>
+                    </div>
+                    <div class="profile-desc">Tiene interés pero siempre hay algo que lo frena. Necesita ayuda para priorizar y un empuje suave hacia la decisión.</div>
+                </div>
+                <div class="profile-card tilt-card">
+                    <div class="profile-header">
+                        <div class="profile-icon">⚫</div>
+                        <div>
+                            <div class="profile-name">EL FANTASMA</div>
+                            <div class="profile-bar">Sistema asignado en el brief</div>
+                        </div>
+                    </div>
+                    <div class="profile-desc">Llega caliente y desaparece sin razón aparente. Requiere seguimiento estratégico y re-engagement específico.</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 1.5rem; color: rgba(255,255,255,0.7); font-size: 0.9375rem;">
+                Cada perfil exige una estrategia distinta. El sistema detecta señales antes de que tu closer pierda tiempo descifrándolas en vivo.
+            </p>
+        </div>
+    </section>
+
+    <section class="results" id="resultados">
+        <div class="container">
+            <div class="section-header">
+                <div class="eyebrow">LO QUE CAMBIA EN LA OPERACIÓN</div>
+                <h2 class="section-title">Tu closer deja de descubrir. Empieza a ejecutar.</h2>
+            </div>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-number">⏱ 6 horas</div>
+                    <div class="result-label">de vuelta a tu closer. Deja de gastar sus mejores horas filtrando leads que nunca debieron llegar.</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">⬡ Entra con diagnóstico</div>
+                    <div class="result-label">El brief llega antes con perfil, dolor detectado, objeciones probables y la estrategia de apertura exacta.</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">📊 Decisiones con datos</div>
+                    <div class="result-label">Sabes qué está entrando, dónde se rompe el pipeline y qué cambiar. No te enteras cuando ya es tarde.</div>
+                </div>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial tilt-card">
+                    <p class="testimonial-text">"Pensé que el problema era mi closer. El problema era que llegaba a ciegas a cada llamada. Con el brief, eso cambió la primera semana."</p>
+                    <div class="testimonial-author">— Director de ventas</div>
+                    <div class="testimonial-role">Consultoría high-ticket · LatAm</div>
+                </div>
+                <div class="testimonial tilt-card">
+                    <p class="testimonial-text">"Antes mi closer tardaba 15 minutos en entender con quién hablaba. Ahora llega sabiendo el perfil, el dolor y cómo abrir. Eso solo ya mejoró la tasa."</p>
+                    <div class="testimonial-author">— Fundador</div>
+                    <div class="testimonial-role">Agencia de servicios premium · Mercado hispano</div>
+                </div>
+            </div>
+            <div class="integrations">
+                <div class="integration-item">✓ GoHighLevel</div>
+                <div class="integration-item">✓ HubSpot</div>
+                <div class="integration-item">✓ Cal.com</div>
+                <div class="integration-item">✓ Calendly</div>
+                <div class="integration-item">✓ WhatsApp</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="como-funciona">
+        <div class="container">
+            <div class="section-header">
+                <div class="eyebrow">EL SISTEMA EN 2 MOMENTOS</div>
+                <h2 class="section-title">Antes de cada llamada. Antes de que tu closer improvise.</h2>
+            </div>
+            <div class="step tilt-card">
+                <div class="step-header">
+                    <span class="step-number">MOMENTO 1 — ANTES (WhatsApp Qualifier)</span>
+                </div>
+                <p class="step-text"><strong>El Closer Copilot conversa con el lead de forma natural por WhatsApp.</strong><br><br>No suena a bot. No manda formularios. En minutos extrae la razón real por la que contactó hoy, su nivel de dolor, si tiene presupuesto, y si tiene autoridad para decidir.<br><br>Los leads que pasan el diagnóstico quedan como HOT y se agendan. Los que no, no llegan a tu closer. Nunca.</p>
+            </div>
+            <div class="step tilt-card">
+                <div class="step-header">
+                    <span class="step-number">MOMENTO 2 — EL BRIEF (QuantumCore™)</span>
+                </div>
+                <p class="step-text"><strong>El sistema genera un diagnóstico clínico del lead y lo envía directo al WhatsApp del closer.</strong><br><br>No es un template genérico. Es un brief construido sobre la metodología QuantumCore™ — el mismo framework que entrena closers de élite.</p>
+                <div class="brief-visual">
+                    <div class="brief-header">━━━━━━━━ BRIEF PRE-LLAMADA · 30 min antes ━━━━━━━━</div>
+                    <div class="brief-row" style="color: var(--electric-cyan); margin-bottom: 0.75rem;">Lead: María González | Cita: 14:30 HS</div>
+                    <div class="brief-row" style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <span>MOTOR DE ACCIÓN:</span>
+                        <span style="color: var(--electric-cyan);">[CLASIFICADO HASTA ACTIVAR]</span>
+                    </div>
+                    <div style="margin-bottom: 0.75rem;">
+                        <div style="color: var(--electric-cyan); margin-bottom: 0.375rem;">DOLOR DETECTADO</div>
+                        <div class="brief-row">N1: <span class="brief-bar">████████████</span></div>
+                        <div class="brief-row">N2: <span class="brief-bar">████████████</span></div>
+                        <div class="brief-row">N3: <span class="brief-bar">████████████</span></div>
+                    </div>
+                    <div style="margin-bottom: 0.75rem;">
+                        <div style="color: var(--electric-cyan); margin-bottom: 0.375rem;">PERFILES QUANTUMCORE</div>
+                        <div class="brief-row">Fricción: <span class="brief-bar">████████████</span></div>
+                        <div class="brief-row">Decisión: <span class="brief-bar">████████████</span></div>
+                        <div class="brief-row">Monetario: <span class="brief-bar">████████████</span></div>
+                    </div>
+                    <div style="margin-bottom: 0.75rem;">
+                        <div style="color: var(--electric-cyan); margin-bottom: 0.375rem;">ESTRATEGIA RECOMENDADA</div>
+                        <div class="brief-row">Apertura: <span class="brief-bar">████████████</span></div>
+                        <div class="brief-row">Sistema de cierre: <span class="brief-bar">████████████</span></div>
+                    </div>
+                    <div>
+                        <div style="color: #f59e0b; margin-bottom: 0.375rem;">⚠ ALERTAS</div>
+                        <div class="brief-row">Objeciones probables: <span class="brief-bar">████████████</span></div>
+                        <div class="brief-row">Urgencia: <span class="urgency-high">ALTA</span></div>
+                    </div>
+                </div>
+                <p class="step-text" style="margin-top: 1rem; font-size: 0.9375rem; color: rgba(255,255,255,0.8);">El brief completo llega al closer antes de cada llamada.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="diagnostico">
+        <div class="container">
+            <h2 class="cta-title">¿Cuánto revenue perdió tu equipo esta semana por improvisar?</h2>
+            <p class="cta-text">En 30 minutos analizamos tu operación actual, cuantificamos el gap y te decimos si el sistema tiene fit con tu negocio. Sin pitch. Sin compromiso.</p>
+            <div class="hero-ctas" style="justify-content: center;">
+                <a href="https://calendly.com/mgallmur/45" class="btn btn-whatsapp" target="_blank">💬 Agendar diagnóstico</a>
+                <a href="https://calendly.com/mgallmur/45" class="btn btn-secondary" target="_blank">👤 Hablar con Mauricio</a>
+            </div>
+            <div class="trust-signals">
+                <span>✓ Sin spam</span>
+                <span>✓ Sin pitch genérico</span>
+                <span>✓ Diagnóstico real de tu operación</span>
+                <span>✓ 30 min · sin costo</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="planes">
+        <div class="container">
+            <div class="section-header">
+                <div class="eyebrow">IMPLEMENTACIÓN ASISTIDA · LLAVE EN MANO</div>
+                <h2 class="section-title">No compras software que configuras solo.<br>Implementamos, calibramos y mantenemos el sistema para tu operación específica.</h2>
+                <p class="section-text">Compromiso mínimo 3 meses — el tiempo necesario para calibrar el sistema con datos reales de tu pipeline y medir resultados.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card tilt-card">
+                    <div class="pricing-name">STARTER</div>
+                    <div class="pricing-amount">$800<span style="font-size: 1rem; color: rgba(255,255,255,0.5);">/mes</span></div>
+                    <div class="pricing-setup">Setup único: $1,500</div>
+                    <div class="pricing-desc">Para equipos que quieren dejar de quemar closers filtrando leads manualmente</div>
+                    <ul class="pricing-features">
+                        <li>1 a 2 closers</li>
+                        <li>Qualifier + Brief</li>
+                        <li>Integración CRM</li>
+                        <li>Onboarding completo</li>
+                        <li>Soporte mensual</li>
+                    </ul>
+                    <a href="https://calendly.com/mgallmur/45" class="btn btn-secondary" style="width: 100%; justify-content: center;" target="_blank">Agendar diagnóstico</a>
+                </div>
+
+                <div class="pricing-card tilt-card featured">
+                    <div class="pricing-name">GROWTH ⭐</div>
+                    <div class="pricing-amount">$1,200<span style="font-size: 1rem; color: rgba(255,255,255,0.5);">/mes</span></div>
+                    <div class="pricing-setup">Setup único: $2,000</div>
+                    <div class="pricing-desc">Para equipos en crecimiento que necesitan visibilidad y optimización continua</div>
+                    <ul class="pricing-features">
+                        <li>3 a 4 closers</li>
+                        <li>Todo Starter incluido</li>
+                        <li>Ajustes finos mensuales</li>
+                        <li>Reporte semanal de pipeline</li>
+                        <li>Calibración por oferta</li>
+                        <li>Prioridad en soporte</li>
+                    </ul>
+                    <a href="https://calendly.com/mgallmur/45" class="btn btn-whatsapp" style="width: 100%; justify-content: center;" target="_blank">Agendar diagnóstico</a>
+                </div>
+
+                <div class="pricing-card tilt-card">
+                    <div class="pricing-name">SCALE</div>
+                    <div class="pricing-amount">$1,500<span style="font-size: 1rem; color: rgba(255,255,255,0.5);">/mes</span></div>
+                    <div class="pricing-setup">Setup único: $2,500</div>
+                    <div class="pricing-desc">Para operaciones complejas con múltiples flujos y segmentos</div>
+                    <ul class="pricing-features">
+                        <li>5 a 8 closers</li>
+                        <li>Todo Growth incluido</li>
+                        <li>Múltiples flujos paralelos</li>
+                        <li>Calibración por segmento</li>
+                        <li>Sesión mensual de optimización</li>
+                        <li>Soporte dedicado</li>
+                    </ul>
+                    <a href="https://calendly.com/mgallmur/45" class="btn btn-secondary" style="width: 100%; justify-content: center;" target="_blank">Agendar diagnóstico</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: rgba(37, 211, 102, 0.05); border: 1px solid rgba(37, 211, 102, 0.2); border-radius: 12px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                <div style="font-family: var(--font-display); font-weight: 600; margin-bottom: 0.5rem; color: #25D366;">El ROI más conservador: un solo cierre adicional al mes</div>
+                <div style="font-size: 0.9375rem; color: rgba(255,255,255,0.7);">Si el sistema evita 6 horas semanales de leads no calificados y mejora la preparación del closer para recuperar <strong>un cierre adicional al mes</strong> — en high-ticket con ticket de $3,000, eso son $3,000 de revenue extra. El plan Starter cuesta $800/mes. <strong>El sistema se paga en menos de la primera semana del mes.</strong></div>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Necesito cambiar mi canal de ventas o mi stack actual? <span>▼</span></button>
+                    <div class="faq-answer">No. El sistema opera en WhatsApp, que ya es donde viven tus leads. No necesitas adoptar nada nuevo ni migrar tu operación. Si usas GoHighLevel, Kommo, HubSpot o Calendly, el brief se conecta directamente. Si usas otro stack, lo evaluamos en el diagnóstico.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Cuánto tiempo toma el setup hasta tener el sistema activo? <span>▼</span></button>
+                    <div class="faq-answer">El objetivo es tenerlo operativo en 7 días o menos desde la firma. El tiempo exacto depende de la complejidad de tu oferta y tu stack actual. El setup incluye la configuración del qualifier adaptada a tu ICP específico — no es un template genérico que activas en 5 minutos.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Los leads van a notar que hablan con un sistema y no con una persona? <span>▼</span></button>
+                    <div class="faq-answer">La conversación está construida sobre la metodología QuantumCore™ — no es un flujo de preguntas de formulario. El agente adapta el tono, la longitud del mensaje y el ritmo al comportamiento del lead en tiempo real. En los pilotos actuales, la gran mayoría de leads no identifica que está hablando con un sistema automatizado.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Cómo y cuándo le llega el brief al closer exactamente? <span>▼</span></button>
+                    <div class="faq-answer">Por WhatsApp, directo al número del closer, 30 minutos antes de la cita agendada. Automáticamente. Sin que nadie lo tenga que enviar. El closer también puede consultarlo en la consola web si prefiere verlo en pantalla grande antes de la llamada.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Funciona si mis leads llegan de anuncios o si mi equipo vende en inglés? <span>▼</span></button>
+                    <div class="faq-answer">El sistema funciona bien cuando los leads llegan por WhatsApp independientemente de la fuente — anuncios, orgánico, referidos o formularios que redirigen a WhatsApp. Está optimizado para equipos en español. Para operaciones bilingües o con leads en USA, el diagnóstico previo determina si hay fit real.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Qué diferencia real hay entre esto y un chatbot genérico de WhatsApp? <span>▼</span></button>
+                    <div class="faq-answer">Un chatbot genérico te dice si el lead tiene interés: sí o no. WhatsApp Closer Copilot identifica su Perfil de Fricción conductual, su relación con el dinero, la razón psicológica real por la que contactó hoy específicamente, y le dice al closer cuál de los sistemas de cierre QuantumCore™ tiene mayor probabilidad de funcionar con esa persona. Es diagnóstico clínico previo a la llamada, no encuesta de datos básicos.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Qué pasa si el sistema califica a alguien que no debería comprarte? <span>▼</span></button>
+                    <div class="faq-answer">El sistema tiene criterios de no-calificación activos — incluyendo señales de vulnerabilidad financiera, falta de autoridad decisional y expectativas irreales. Cuando se activan, el lead no llega a tu closer y recibe un cierre de ciclo limpio. Eso protege tu tasa de reembolsos y la reputación de tu equipo.</div>
+                </div>
+                <div class="faq-item active">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Qué es exactamente el QuantumCore™? <span>▼</span></button>
+                    <div class="faq-answer">Es la metodología propietaria que estructura cómo se interpreta al prospecto y cómo se prepara mejor la llamada antes de vender. Es el núcleo del sistema — no es tecnología, es el framework que la tecnología ejecuta.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="sobre">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <div class="about-photo-wrapper">
+                        <div class="about-photo tilt-card">
+                            <img src="https://iq.closingcodeai.online/mauricio.jpg" alt="Mauricio Gallmur">
+                            <div class="about-photo-overlay">
+                                <div class="about-photo-name">MAURICIO GALLMUR</div>
+                                <div class="about-photo-role">Fundador, The Closing Code AI</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-content">
+                    <div class="eyebrow">QUIÉN LO CONSTRUYÓ</div>
+                    <h2 class="section-title">La metodología viene del campo de batalla. No de la teoría.</h2>
+                    <div class="about-text">
+                        <p>Pasé años cerrando y ayudando a construir equipos de ventas high-ticket en el mercado hispanohablante. Llamada por llamada, veía el mismo patrón repetirse.</p>
+                        <p>El closer no perdía deals por falta de esfuerzo. Los perdía porque usaba la estrategia equivocada con el tipo de prospecto equivocado — porque nadie le había dado el contexto necesario para saber cómo entrar.</p>
+                        <p>Documenté ese patrón. Construí el framework QuantumCore™ para leer prospectos antes de hablar con ellos. Después construí la capa de IA que lo ejecuta automáticamente, en el canal donde ya viven tus leads.</p>
+                        <p><strong>WhatsApp Closer Copilot es la primera capa. Lo que hace tu closer con ese contexto, eso determina todo lo demás.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" style="padding: 4rem 1.5rem;">
+        <div class="container">
+            <h2 class="cta-title">Cada semana que tu closer improvisa es revenue que no se recupera.</h2>
+            <p class="cta-text">El diagnóstico es gratis. Dura 30 minutos. Al final sabes exactamente cuánto está costando la falta de sistema en tu operación — y si tiene sentido implementarlo.</p>
+            <div class="hero-ctas" style="justify-content: center;">
+                <a href="https://calendly.com/mgallmur/45" class="btn btn-whatsapp" target="_blank">💬 Agendar diagnóstico gratuito</a>
+                <a href="https://calendly.com/mgallmur/45" class="btn btn-secondary" target="_blank">👤 Hablar con Mauricio</a>
+            </div>
+            <p style="margin-top: 1rem; color: rgba(255,255,255,0.5); font-size: 0.8125rem;">30 min · sin costo · sin pitch genérico</p>
+            <p style="margin-top: 0.25rem; color: rgba(255,255,255,0.4); font-size: 0.6875rem;">Máximo 5 implementaciones nuevas por mes.</p>
+
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div class="eyebrow" style="margin-bottom: 1rem;">LO QUE VIENE DESPUÉS — FASE 2</div>
+                <h3 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 0.75rem;">¿Y qué pasó <em>dentro</em> de la llamada?</h3>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.9375rem; max-width: 600px; margin: 0 auto 1rem;">WhatsApp Closer Copilot cubre el antes. Cuando necesites saber exactamente qué falló en cada llamada, qué error costó el cierre y qué debe cambiar el closer en la siguiente conversación — eso es <strong>QuantumCore AI Closer Coach</strong>: análisis automático de grabaciones, scorecard clínico por llamada y misión de mejora individual por closer. Un producto separado. El paso natural después de este.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="footer-name">WhatsApp Closer Copilot</span>
+                <span class="footer-tagline">QuantumCore™ — Metodología propietaria · The Closing Code AI</span>
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                <a href="terms.html" class="footer-link">Terms of Service</a>
+            </div>
+            <div class="footer-copyright">© 2026 Mauricio Gallmur<br>hola@theclosingcodeai.online</div>
+        </div>
+    </footer>
+
+    <a href="https://calendly.com/mgallmur/45" class="whatsapp-float" target="_blank" title="Agendar diagnóstico">💬</a>
+
+    <script>
+        // Particle System
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0, mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 2 + 0.5;
+                this.opacity = Math.random() * 0.4 + 0.2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = window.innerWidth < 768 ? 20 : 40;
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.08 * (1 - dist / 120)})`;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            drawConnections();
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        // 3D Tilt Effect
+        const tiltElements = document.querySelectorAll('.tilt-card, .about-photo');
+        
+        tiltElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+
+        // Navbar Scroll Effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
