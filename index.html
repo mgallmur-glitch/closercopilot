@@ -680,7 +680,6 @@
             padding: 1.5rem;
             transition: transform 0.1s ease, box-shadow 0.3s ease;
             transform-style: preserve-3d;
-            cursor: pointer;
         }
 
         .card:hover {
@@ -739,7 +738,6 @@
             text-align: center;
             transition: transform 0.1s ease, box-shadow 0.3s ease;
             transform-style: preserve-3d;
-            cursor: pointer;
         }
 
         .method-card:hover {
@@ -786,7 +784,6 @@
             padding: 1.5rem;
             transition: transform 0.1s ease, border-color 0.3s ease;
             transform-style: preserve-3d;
-            cursor: pointer;
         }
 
         .profile-card:hover {
@@ -895,7 +892,6 @@
             position: relative;
             transition: transform 0.1s ease;
             transform-style: preserve-3d;
-            cursor: pointer;
         }
 
         .testimonial::before {
@@ -1360,6 +1356,17 @@
         .whatsapp-float:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 40px rgba(37, 211, 102, 0.7);
+        }
+
+        /* Accessibility: Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .aurora { animation: none; }
+            #particles-canvas { display: none; }
         }
 
         /* Responsive */
@@ -1877,35 +1884,35 @@
 
             <div class="faq-list">
                 <div class="faq-item">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Necesito cambiar mi canal de ventas o mi stack actual? <span>▼</span></button>
+                    <button class="faq-question">¿Necesito cambiar mi canal de ventas o mi stack actual? <span>▼</span></button>
                     <div class="faq-answer">No. El sistema opera en WhatsApp, que ya es donde viven tus leads. No necesitas adoptar nada nuevo ni migrar tu operación. Si usas GoHighLevel, Kommo, HubSpot o Calendly, el brief se conecta directamente. Si usas otro stack, lo evaluamos en el diagnóstico.</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Cuánto tiempo toma el setup hasta tener el sistema activo? <span>▼</span></button>
+                    <button class="faq-question">¿Cuánto tiempo toma el setup hasta tener el sistema activo? <span>▼</span></button>
                     <div class="faq-answer">El objetivo es tenerlo operativo en 7 días o menos desde la firma. El tiempo exacto depende de la complejidad de tu oferta y tu stack actual. El setup incluye la configuración del qualifier adaptada a tu ICP específico — no es un template genérico que activas en 5 minutos.</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Los leads van a notar que hablan con un sistema y no con una persona? <span>▼</span></button>
+                    <button class="faq-question">¿Los leads van a notar que hablan con un sistema y no con una persona? <span>▼</span></button>
                     <div class="faq-answer">La conversación está construida sobre la metodología QuantumCore™ — no es un flujo de preguntas de formulario. El agente adapta el tono, la longitud del mensaje y el ritmo al comportamiento del lead en tiempo real. En los pilotos actuales, la gran mayoría de leads no identifica que está hablando con un sistema automatizado.</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Cómo y cuándo le llega el brief al closer exactamente? <span>▼</span></button>
+                    <button class="faq-question">¿Cómo y cuándo le llega el brief al closer exactamente? <span>▼</span></button>
                     <div class="faq-answer">Por WhatsApp, directo al número del closer, 30 minutos antes de la cita agendada. Automáticamente. Sin que nadie lo tenga que enviar. El closer también puede consultarlo en la consola web si prefiere verlo en pantalla grande antes de la llamada.</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Funciona si mis leads llegan de anuncios o si mi equipo vende en inglés? <span>▼</span></button>
+                    <button class="faq-question">¿Funciona si mis leads llegan de anuncios o si mi equipo vende en inglés? <span>▼</span></button>
                     <div class="faq-answer">El sistema funciona bien cuando los leads llegan por WhatsApp independientemente de la fuente — anuncios, orgánico, referidos o formularios que redirigen a WhatsApp. Está optimizado para equipos en español. Para operaciones bilingües o con leads en USA, el diagnóstico previo determina si hay fit real.</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Qué diferencia real hay entre esto y un chatbot genérico de WhatsApp? <span>▼</span></button>
+                    <button class="faq-question">¿Qué diferencia real hay entre esto y un chatbot genérico de WhatsApp? <span>▼</span></button>
                     <div class="faq-answer">Un chatbot genérico te dice si el lead tiene interés: sí o no. WhatsApp Closer Copilot identifica su Perfil de Fricción conductual, su relación con el dinero, la razón psicológica real por la que contactó hoy específicamente, y le dice al closer cuál de los sistemas de cierre QuantumCore™ tiene mayor probabilidad de funcionar con esa persona. Es diagnóstico clínico previo a la llamada, no encuesta de datos básicos.</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Qué pasa si el sistema califica a alguien que no debería comprarte? <span>▼</span></button>
+                    <button class="faq-question">¿Qué pasa si el sistema califica a alguien que no debería comprarte? <span>▼</span></button>
                     <div class="faq-answer">El sistema tiene criterios de no-calificación activos — incluyendo señales de vulnerabilidad financiera, falta de autoridad decisional y expectativas irreales. Cuando se activan, el lead no llega a tu closer y recibe un cierre de ciclo limpio. Eso protege tu tasa de reembolsos y la reputación de tu equipo.</div>
                 </div>
                 <div class="faq-item active">
-                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">¿Qué es exactamente el QuantumCore™? <span>▼</span></button>
+                    <button class="faq-question">¿Qué es exactamente el QuantumCore™? <span>▼</span></button>
                     <div class="faq-answer">Es la metodología propietaria que estructura cómo se interpreta al prospecto y cómo se prepara mejor la llamada antes de vender. Es el núcleo del sistema — no es tecnología, es el framework que la tecnología ejecuta.</div>
                 </div>
             </div>
@@ -1918,7 +1925,7 @@
                 <div class="about-image">
                     <div class="about-photo-wrapper">
                         <div class="about-photo tilt-card">
-                            <img src="https://iq.closingcodeai.online/mauricio.jpg" alt="Mauricio Gallmur">
+                            <img src="https://iq.closingcodeai.online/mauricio.jpg" alt="Mauricio Gallmur" loading="lazy" onerror="this.style.display='none';">
                             <div class="about-photo-overlay">
                                 <div class="about-photo-name">MAURICIO GALLMUR</div>
                                 <div class="about-photo-role">Fundador, The Closing Code AI</div>
@@ -1973,7 +1980,7 @@
         </div>
     </footer>
 
-    <a href="https://diagnostico.closingcodeai.online/diagnostico" class="whatsapp-float" target="_blank" title="Calcular mi Revenue Gap">💬</a>
+    <a href="https://diagnostico.closingcodeai.online/diagnostico" class="whatsapp-float" target="_blank" title="Calcular mi Revenue Gap" aria-label="Calcular mi Revenue Gap por WhatsApp">💬</a>
 
     <script>
         // Particle System
@@ -2036,6 +2043,10 @@
         }
 
         function animateParticles() {
+            if (!particlesRunning) {
+                requestAnimationFrame(animateParticles);
+                return;
+            }
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
             drawConnections();
@@ -2080,6 +2091,30 @@
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
+
+        // FAQ Accordion — event delegation, no inline handlers
+        document.querySelector('.faq-list').addEventListener('click', function(e) {
+            const btn = e.target.closest('.faq-question');
+            if (!btn) return;
+            const item = btn.closest('.faq-item');
+            const wasActive = item.classList.contains('active');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            // Toggle current
+            if (!wasActive) item.classList.add('active');
+        });
+
+        // Pause particle animation when hero is not visible
+        let particlesRunning = true;
+        const heroSection = document.querySelector('.hero');
+        if (heroSection && 'IntersectionObserver' in window) {
+            const particleObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    particlesRunning = entry.isIntersecting;
+                });
+            }, { threshold: 0 });
+            particleObserver.observe(heroSection);
+        }
     </script>
 </body>
 </html>
